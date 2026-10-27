@@ -106,22 +106,22 @@
   main{ padding-top:var(--cabecera); }
 
   /* ---------- hero (dos columnas: texto + mosaico de muestras) ---------- */
-  .hero{ padding:0; position:relative; z-index:2; --vuelo:0px; }
+  /* ---------- hero: foto collage de muestras que sobresale, sin caja ---------- */
+  .hero{ padding:0; position:relative; z-index:2; }
   .heroGrid{ display:grid; }
-  .heroArt{ order:1; position:relative; background:var(--surface-deep); overflow:hidden; border-radius:0 0 22px 22px; margin:0; }
-  .heroArt img{ width:100%; height:auto; object-fit:cover; display:block; }
-  .heroText{ order:2; display:flex; flex-direction:column; align-items:flex-start; gap:18px; padding:30px 20px 8px; }
-  @media (min-width:768px){ .heroText{ padding:34px 40px 10px; } }
+  .heroArt{ order:1; display:flex; align-items:flex-end; justify-content:center; padding:4px 12px 0; }
+  .heroArt img{ width:100%; max-width:480px; height:auto; display:block; filter:drop-shadow(0 26px 40px rgba(24,23,21,.14)); }
+  .heroText{ order:2; display:flex; flex-direction:column; align-items:flex-start; gap:16px; padding:18px 20px 10px; }
+  @media (min-width:768px){ .heroText{ padding:22px 40px 12px; } }
   .heroText h1{ max-width:16ch; }
   .heroText .lead{ font-size:13.5px; font-weight:300; line-height:1.8; color:var(--muted); max-width:46ch; }
   .heroText .arrow{ margin-top:6px; }
   @media (min-width:900px){
-    /* la foto va a sangre por la derecha y sobresale por debajo del hero (--vuelo), pisando la sección de pasos */
-    .hero{ --vuelo:clamp(72px,10vh,120px); }
-    .heroGrid{ grid-template-columns:minmax(0,0.9fr) minmax(0,1.25fr); align-items:stretch; gap:clamp(40px,4vw,64px); min-height:calc(100svh - var(--cabecera) - 24px); max-height:780px; padding:0; }
-    .heroText{ order:1; justify-content:flex-end; gap:22px; padding:0 0 calc(var(--vuelo) + 24px) 64px; }
-    .heroArt{ order:2; height:calc(100% + var(--vuelo)); margin:0 0 calc(-1 * var(--vuelo)) 0; border-radius:0 0 0 28px; box-shadow:0 30px 60px -40px rgba(24,23,21,.35); }
-    .heroArt img{ height:100%; max-height:none; }
+    /* dos columnas: texto a la izquierda, collage a la derecha; las muestras se salen del marco */
+    .heroGrid{ grid-template-columns:minmax(0,0.95fr) minmax(0,1.15fr); align-items:center; gap:clamp(24px,3vw,52px); min-height:calc(100svh - var(--cabecera) - 24px); max-height:800px; padding:0 40px 0 64px; }
+    .heroText{ order:1; justify-content:center; gap:22px; padding:0 0 24px 0; }
+    .heroArt{ order:2; height:100%; align-items:center; justify-content:flex-end; padding:0; }
+    .heroArt img{ width:100%; height:auto; max-width:620px; max-height:96%; margin-right:clamp(-32px,-2.4vw,-10px); }
   }
 
   /* ---------- franja: cómo funciona en 3 líneas ---------- */
@@ -432,7 +432,7 @@
         <a class="arrow" href="https://www.rolscarpets.com/productos/alfombras-a-medida/">Elige tus muestras <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg></a>
       </div>
       <div class="heroArt">
-        <img src="rols-moodboard-0006.webp" alt="Conjunto de muestras de alfombras Rols en distintas texturas y colores naturales" fetchpriority="high">
+        <img src="rols-muestras-hero-collage.webp" alt="Muestrarios de alfombras Rols en distintas texturas y tonos naturales dispuestos sobre un fondo claro" fetchpriority="high">
       </div>
     </div>
   </section>
