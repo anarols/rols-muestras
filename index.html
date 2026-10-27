@@ -141,7 +141,7 @@
   /* ---------- pasos (4 fichas con foto + gráfico) ---------- */
   .pasos{ padding-block:60px 34px; }
   @media (min-width:768px){ .pasos{ padding-block:72px 44px; } }
-  @media (min-width:900px){ .pasos{ padding-top:76px; } .pasosHead{ max-width:none; margin-bottom:34px; } }
+  @media (min-width:900px){ .pasos{ padding-top:108px; } .pasosHead{ max-width:none; margin-bottom:34px; } }
   .pasosHead{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:14px 32px; margin-bottom:26px; }
   .pasosHead h2{ max-width:none; }
   @media (min-width:768px){ .pasosHead h2{ white-space:nowrap; } }
@@ -152,7 +152,7 @@
   .paso{ display:flex; flex-direction:column; min-width:0; }
   .paso .meta{ display:flex; flex-direction:column; gap:12px; }
   .paso .meta .n{ font-family:var(--display); font-weight:300; font-size:30px; line-height:1; letter-spacing:.02em; color:var(--fg); }
-  .paso .meta h3{ font-family:var(--sans); font-weight:400; font-size:13.5px; line-height:1.6; letter-spacing:normal; max-width:none; color:var(--fg); }
+  .paso .meta h3{ font-family:var(--sans); font-weight:400; font-size:13.5px; line-height:1.6; letter-spacing:normal; max-width:230px; color:var(--fg); }
   @media (min-width:900px){ .paso .meta h3{ min-height:3.2em; } }
   .paso .art{ position:relative; margin-top:20px; margin-bottom:42px; }
   .paso .phwrap{ position:relative; border-radius:16px; overflow:hidden; background:var(--surface-deep); aspect-ratio:4/4.1; }
@@ -275,6 +275,18 @@
   .grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:40px 22px; }
   @media (min-width:700px){ .grid{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:44px 26px; } }
   @media (min-width:1024px){ .grid{ grid-template-columns:repeat(5,minmax(0,1fr)); gap:44px 24px; } }
+  .libnav{ display:none; }
+  @media (max-width:699.98px){ /* biblioteca como carrusel de una ficha (todo el movil) */
+    .libview{ overflow:visible; }
+    .grid{ display:block; grid-template-columns:none; gap:0; }
+    .grid > .card{ display:none; }
+    .grid > .card.lib-active{ display:flex; }
+    .libnav{ display:flex; align-items:center; justify-content:center; gap:22px; margin-top:22px; }
+    .libnav button{ width:42px; height:42px; border-radius:999px; border:1px solid var(--line); background:#fff; color:var(--fg); cursor:pointer; display:flex; align-items:center; justify-content:center; }
+    .libnav button svg{ width:20px; height:20px; }
+    .libnav button:disabled{ opacity:.3; }
+    .libcount{ font-family:var(--sans); font-size:12px; font-weight:500; letter-spacing:.1em; color:var(--muted); min-width:56px; text-align:center; }
+  }
   .card{ display:flex; flex-direction:column; }
   .card .ph{ position:relative; overflow:hidden; border-radius:16px; background:var(--surface-deep); aspect-ratio:24/25; touch-action:pan-y; }
   .card .track{ display:flex; height:100%; will-change:transform; transition:transform .5s cubic-bezier(.4,0,.15,1); }
@@ -813,11 +825,39 @@
     if(count) count.textContent=shown+(shown===1?' alfombra':' alfombras');
     if(fcount) fcount.textContent=shown;
     if(nores) nores.hidden = shown!==0;
+    li=0; libRender();
   }
   if(search) search.addEventListener('input', apply);
   lib.querySelectorAll('[data-facet]').forEach(function(c){ c.addEventListener('change', apply); });
   var fclear=lib.querySelector('[data-fclear]');
   if(fclear) fclear.addEventListener('click', function(){ lib.querySelectorAll('[data-facet]:checked').forEach(function(c){ c.checked=false; }); if(search) search.value=''; apply(); });
+
+  /* ---- carrusel de biblioteca en móvil (una ficha a la vez) ---- */
+  var grid=lib.querySelector('.grid'), libmain=lib.querySelector('.libmain'), li=0, libnav, libprev, libnext, libcount;
+  function libMobile(){ return window.matchMedia('(max-width:699.98px)').matches; }
+  function libVisible(){ return cards.filter(function(c){ return c.style.display!=='none'; }); }
+  function libRender(){
+    if(!grid){ return; }
+    cards.forEach(function(c){ c.classList.remove('lib-active'); });
+    if(!libMobile()){ return; }
+    var vis=libVisible(), t=vis.length; if(t===0){ return; }
+    if(li>=t){ li=t-1; } if(li<0){ li=0; }
+    vis[li].classList.add('lib-active');
+    if(libcount){ libcount.textContent=(li+1)+' / '+t; }
+    if(libprev){ libprev.disabled=(li===0); }
+    if(libnext){ libnext.disabled=(li===t-1); }
+  }
+  function libGo(n){ var t=libVisible().length; li=Math.max(0,Math.min(t-1,n)); libRender(); }
+  if(grid && libmain){
+    libnav=document.createElement('div'); libnav.className='libnav';
+    libnav.innerHTML='<button type="button" class="libprev" aria-label="Alfombra anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 5 8 12 15 19"></polyline></svg></button><span class="libcount" data-libcount>1 / '+cards.length+'</span><button type="button" class="libnext" aria-label="Alfombra siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 5 16 12 9 19"></polyline></svg></button>';
+    libmain.appendChild(libnav);
+    libprev=libnav.querySelector('.libprev'); libnext=libnav.querySelector('.libnext'); libcount=libnav.querySelector('.libcount');
+    libprev.addEventListener('click', function(){ libGo(li-1); });
+    libnext.addEventListener('click', function(){ libGo(li+1); });
+    window.addEventListener('resize', libRender);
+    libRender();
+  }
 })();
 
 </script>
