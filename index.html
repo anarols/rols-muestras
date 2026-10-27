@@ -145,16 +145,22 @@
   .pasosHead{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:14px 32px; margin-bottom:26px; }
   .pasosHead h2{ max-width:20ch; }
   .pasosHead .eyebrow{ margin-bottom:12px; }
-  .pgrid{ display:grid; gap:34px 18px; grid-template-columns:repeat(2,minmax(0,1fr)); }
-  @media (min-width:900px){ .pgrid{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:26px; } }
-  .paso{ display:flex; flex-direction:column; min-width:0; gap:18px; }
-  /* número y título siempre visibles, sobre la foto; la línea superior une los cuatro pasos */
-  .paso .meta{ display:flex; flex-direction:column; gap:10px; padding-top:16px; border-top:1px solid var(--line-strong); flex:1; }
-  .paso .meta .n{ font-family:var(--display); font-size:12.5px; letter-spacing:.14em; color:var(--soft); }
+  .pgrid{ display:grid; gap:40px 20px; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  @media (min-width:900px){ .pgrid{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:28px; } }
+  /* punto medio: número en círculo + línea que une los pasos (claridad de la web actual), foto limpia (estética del rediseño) */
+  .paso{ position:relative; display:flex; flex-direction:column; min-width:0; }
+  .paso .meta{ display:flex; flex-direction:column; gap:14px; }
+  .paso .meta .n{ position:relative; z-index:1; width:46px; height:46px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--line-strong); border-radius:50%; background:var(--bg); font-family:var(--display); font-weight:300; font-size:15px; letter-spacing:.03em; color:var(--fg); }
   .paso .meta h3{ font-family:var(--sans); font-weight:400; font-size:14px; line-height:1.6; letter-spacing:normal; max-width:24ch; color:var(--fg); }
-  .paso .art{ position:relative; border-radius:16px; overflow:hidden; background:var(--surface-deep); aspect-ratio:4/4.3; }
+  @media (min-width:900px){ .paso .meta h3{ min-height:2.6em; } }
+  .paso .art{ position:relative; margin-top:22px; border-radius:16px; overflow:hidden; background:var(--surface-deep); aspect-ratio:4/4.2; }
   .paso .art > img.ph{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.4,0,.15,1); }
   .paso .art:hover > img.ph{ transform:scale(1.045); }
+  /* la línea conecta los círculos (solo cuando van los 4 en fila) */
+  @media (min-width:900px){
+    .paso::before{ content:""; position:absolute; z-index:0; top:23px; left:23px; width:calc(100% + 28px); height:1px; background:var(--line-strong); }
+    .paso:last-child::before{ display:none; }
+  }
 
   /* ---------- ideas: rejilla de producto ---------- */
   .ideas{ padding-block:8px 48px; }
