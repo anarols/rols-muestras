@@ -113,15 +113,15 @@
   .heroArt img{ width:100%; max-width:none; height:auto; display:block; }
   .heroText{ order:2; position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:16px; padding:20px 20px 12px; }
   @media (min-width:768px){ .heroText{ padding:24px 40px 14px; } }
-  .heroText h1{ max-width:16ch; }
+  .heroText h1{ max-width:none; }
   .heroText .lead{ font-size:13.5px; font-weight:300; line-height:1.8; color:var(--muted); max-width:46ch; }
   .heroText .arrow{ margin-top:6px; }
   @media (min-width:900px){
     /* la foto llena la mitad derecha, llega arriba y a la derecha, y las muestras se salen por los bordes */
-    .heroGrid{ grid-template-columns:minmax(0,0.8fr) minmax(0,1.3fr); align-items:center; gap:clamp(12px,1.5vw,28px); min-height:calc(100svh - var(--cabecera) - 16px); max-height:900px; padding:0 0 0 64px; }
-    .heroText{ order:1; align-self:end; justify-content:flex-end; gap:22px; padding:0 0 clamp(44px,8vh,88px) 0; }
-    .heroArt{ order:2; height:100%; align-items:center; justify-content:flex-end; padding:0; overflow:visible; }
-    .heroArt img{ width:100%; height:auto; max-width:none; margin-right:-14px; }
+    .heroGrid{ grid-template-columns:minmax(0,0.84fr) minmax(0,1.42fr); align-items:stretch; gap:clamp(10px,1.2vw,24px); height:calc(100svh - var(--cabecera) - 28px); min-height:520px; max-height:820px; padding:0 0 0 56px; }
+    .heroText{ order:1; align-self:end; justify-content:flex-end; gap:20px; padding:0 0 clamp(26px,4.5vh,56px) 0; }
+    .heroArt{ order:2; height:100%; overflow:hidden; }
+    .heroArt img{ width:100%; height:100%; max-width:none; object-fit:cover; object-position:center; display:block; }
   }
 
   /* ---------- franja: cómo funciona en 3 líneas ---------- */
@@ -141,9 +141,10 @@
   /* ---------- pasos (4 fichas con foto + gráfico) ---------- */
   .pasos{ padding-block:60px 34px; }
   @media (min-width:768px){ .pasos{ padding-block:72px 44px; } }
-  @media (min-width:900px){ .pasos{ padding-top:36px; } .pasosHead{ max-width:42%; margin-bottom:34px; } }
+  @media (min-width:900px){ .pasos{ padding-top:36px; } .pasosHead{ max-width:none; margin-bottom:34px; } }
   .pasosHead{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:14px 32px; margin-bottom:26px; }
-  .pasosHead h2{ max-width:20ch; }
+  .pasosHead h2{ max-width:none; }
+  @media (min-width:768px){ .pasosHead h2{ white-space:nowrap; } }
   .pasosHead .eyebrow{ margin-bottom:12px; }
   .pgrid{ display:grid; gap:44px 20px; grid-template-columns:minmax(0,1fr); }
   @media (min-width:600px){ .pgrid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
@@ -151,7 +152,7 @@
   .paso{ display:flex; flex-direction:column; min-width:0; }
   .paso .meta{ display:flex; flex-direction:column; gap:12px; }
   .paso .meta .n{ font-family:var(--display); font-weight:300; font-size:30px; line-height:1; letter-spacing:.02em; color:var(--fg); }
-  .paso .meta h3{ font-family:var(--sans); font-weight:400; font-size:14px; line-height:1.6; letter-spacing:normal; max-width:24ch; color:var(--fg); }
+  .paso .meta h3{ font-family:var(--sans); font-weight:400; font-size:13.5px; line-height:1.6; letter-spacing:normal; max-width:24ch; color:var(--fg); }
   @media (min-width:900px){ .paso .meta h3{ min-height:2.6em; } }
   .paso .art{ position:relative; margin-top:20px; margin-bottom:42px; }
   .paso .phwrap{ position:relative; border-radius:16px; overflow:hidden; background:var(--surface-deep); aspect-ratio:4/4.1; }
@@ -159,7 +160,7 @@
   .paso .art:hover .phwrap img.ph{ transform:scale(1.05); }
   /* agregado que sobresale del borde inferior, mismo tamaño en los 4 pasos */
   .paso .over{ position:absolute; left:16px; right:16px; bottom:-27px; z-index:2; }
-  .paso .el{ position:relative; height:54px; background:rgba(255,255,255,.97); border-radius:12px; box-shadow:0 14px 28px -16px rgba(24,23,21,.40); display:flex; align-items:center; gap:11px; padding:0 14px; }
+  .paso .el{ position:relative; height:54px; background:rgba(255,255,255,.97); border-radius:12px; box-shadow:0 14px 28px -16px rgba(24,23,21,.40); display:flex; align-items:center; gap:10px; padding:0 12px; }
   .paso .el .ic{ width:34px; height:34px; border-radius:9px; flex:none; display:flex; align-items:center; justify-content:center; }
   .paso .el .ic.img{ overflow:hidden; }
   .paso .el .ic.img img{ width:100%; height:100%; object-fit:cover; }
@@ -174,8 +175,7 @@
   .paso .el .m .sub{ font-size:9.5px; color:var(--soft); white-space:nowrap; }
   .paso .el .m .txt{ font-size:11.5px; font-weight:500; color:var(--fg); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .paso .el .m .ph2{ font-size:10px; color:var(--soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .paso .el .lnk{ display:inline-flex; align-items:center; gap:6px; border-bottom:1px solid var(--line-strong); padding-bottom:4px; font-size:8.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--fg); text-decoration:none; flex:none; transition:gap .3s ease; }
-  .paso .el .lnk:hover{ gap:11px; }
+  .paso .el .lnk{ display:inline-flex; align-items:center; gap:6px; border-bottom:1px solid var(--line-strong); padding-bottom:4px; font-size:8px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--fg); flex:none; cursor:default; }
   .paso .el .lnk svg{ width:9px; height:9px; flex:none; }
   .paso .el .bag{ position:absolute; top:-14px; right:8px; z-index:3; display:inline-flex; align-items:center; gap:6px; background:#fff; border-radius:40px; padding:6px 11px; box-shadow:0 14px 28px -16px rgba(24,23,21,.40); font-size:11px; font-weight:500; color:var(--fg); }
   .paso .el .bag svg{ width:14px; height:14px; stroke:var(--fg); fill:none; }
@@ -478,7 +478,7 @@
           <div class="over"><div class="el">
             <span class="ic img"><img src="mk-sw1.png" alt=""></span>
             <div class="m"><span class="nm">PALMA ROCK</span><span class="sub">Desde 137,80 €</span></div>
-            <a class="lnk" href="https://www.rolscarpets.com/productos/alfombras-a-medida/">Añadir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg></a>
+            <span class="lnk">Añadir muestra <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg></span>
           </div></div>
         </div>
       </article>
@@ -509,7 +509,7 @@
           <div class="over"><div class="el">
             <span class="ic tag"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 12 22l-9-9V3h10z"></path><circle cx="7.5" cy="7.5" r="1.3"></circle></svg></span>
             <div class="m"><span class="ph2">Escribe tu cupón aquí</span></div>
-            <a class="lnk" href="#">Aplicar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg></a>
+            <span class="lnk">Aplicar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg></span>
             <span class="bag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>1</span>
           </div></div>
         </div>
