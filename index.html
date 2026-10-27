@@ -106,20 +106,22 @@
   main{ padding-top:var(--cabecera); }
 
   /* ---------- hero (dos columnas: texto + mosaico de muestras) ---------- */
-  .hero{ padding:0; }
+  .hero{ padding:0; position:relative; z-index:2; --vuelo:0px; }
   .heroGrid{ display:grid; }
-  .heroArt{ order:1; background:var(--surface-deep); overflow:hidden; border-radius:16px; margin:0 20px; }
+  .heroArt{ order:1; position:relative; background:var(--surface-deep); overflow:hidden; border-radius:0 0 22px 22px; margin:0; }
   .heroArt img{ width:100%; height:auto; object-fit:cover; display:block; }
   .heroText{ order:2; display:flex; flex-direction:column; align-items:flex-start; gap:18px; padding:30px 20px 8px; }
-  @media (min-width:768px){ .heroArt{ margin:0 40px; } .heroText{ padding:34px 40px 10px; } }
+  @media (min-width:768px){ .heroText{ padding:34px 40px 10px; } }
   .heroText h1{ max-width:16ch; }
   .heroText .lead{ font-size:13.5px; font-weight:300; line-height:1.8; color:var(--muted); max-width:46ch; }
   .heroText .arrow{ margin-top:6px; }
   @media (min-width:900px){
-    .heroGrid{ grid-template-columns:minmax(0,0.92fr) minmax(0,1.2fr); align-items:stretch; gap:clamp(40px,4vw,56px); min-height:calc(100svh - var(--cabecera) - 24px); max-height:820px; padding:12px 64px 12px 0; }
-    .heroText{ order:1; justify-content:flex-end; gap:22px; padding:0 0 10px 64px; }
-    .heroArt{ order:2; height:100%; margin:0; border-radius:16px; }
-    .heroArt img{ height:100%; max-height:820px; }
+    /* la foto va a sangre por la derecha y sobresale por debajo del hero (--vuelo), pisando la sección de pasos */
+    .hero{ --vuelo:clamp(72px,10vh,120px); }
+    .heroGrid{ grid-template-columns:minmax(0,0.9fr) minmax(0,1.25fr); align-items:stretch; gap:clamp(40px,4vw,64px); min-height:calc(100svh - var(--cabecera) - 24px); max-height:780px; padding:0; }
+    .heroText{ order:1; justify-content:flex-end; gap:22px; padding:0 0 calc(var(--vuelo) + 24px) 64px; }
+    .heroArt{ order:2; height:calc(100% + var(--vuelo)); margin:0 0 calc(-1 * var(--vuelo)) 0; border-radius:0 0 0 28px; box-shadow:0 30px 60px -40px rgba(24,23,21,.35); }
+    .heroArt img{ height:100%; max-height:none; }
   }
 
   /* ---------- franja: cómo funciona en 3 líneas ---------- */
@@ -138,21 +140,21 @@
 
   /* ---------- pasos (4 fichas con foto + gráfico) ---------- */
   .pasos{ padding-block:60px 34px; }
-  @media (min-width:768px){ .pasos{ padding-block:96px 44px; } }
+  @media (min-width:768px){ .pasos{ padding-block:72px 44px; } }
+  @media (min-width:900px){ .pasos{ padding-top:36px; } .pasosHead{ max-width:42%; margin-bottom:34px; } }
   .pasosHead{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:14px 32px; margin-bottom:26px; }
   .pasosHead h2{ max-width:20ch; }
   .pasosHead .eyebrow{ margin-bottom:12px; }
-  .pgrid{ display:grid; gap:18px; grid-template-columns:repeat(2,minmax(0,1fr)); }
-  @media (min-width:900px){ .pgrid{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:24px; } }
-  .paso{ display:flex; flex-direction:column; min-width:0; }
+  .pgrid{ display:grid; gap:34px 18px; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  @media (min-width:900px){ .pgrid{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:26px; } }
+  .paso{ display:flex; flex-direction:column; min-width:0; gap:18px; }
+  /* número y título siempre visibles, sobre la foto; la línea superior une los cuatro pasos */
+  .paso .meta{ display:flex; flex-direction:column; gap:10px; padding-top:16px; border-top:1px solid var(--line-strong); flex:1; }
+  .paso .meta .n{ font-family:var(--display); font-size:12.5px; letter-spacing:.14em; color:var(--soft); }
+  .paso .meta h3{ font-family:var(--sans); font-weight:400; font-size:14px; line-height:1.6; letter-spacing:normal; max-width:24ch; color:var(--fg); }
   .paso .art{ position:relative; border-radius:16px; overflow:hidden; background:var(--surface-deep); aspect-ratio:4/4.3; }
   .paso .art > img.ph{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.4,0,.15,1); }
   .paso .art:hover > img.ph{ transform:scale(1.045); }
-  .paso .cap{ position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; justify-content:flex-end; gap:8px; padding:20px; color:#fff; background:linear-gradient(to top, rgba(24,23,21,.80) 0%, rgba(24,23,21,.36) 44%, rgba(24,23,21,0) 74%); opacity:0; transition:opacity .4s ease; }
-  .paso .art:hover .cap, .paso .art:focus-within .cap{ opacity:1; }
-  .paso .cap .n{ font-family:var(--display); font-size:13px; letter-spacing:.08em; color:rgba(255,255,255,.78); }
-  .paso .cap h3{ font-family:var(--sans); font-weight:300; font-size:13.5px; line-height:1.7; letter-spacing:normal; max-width:26ch; color:#fff; text-shadow:0 1px 14px rgba(0,0,0,.3); }
-  @media (hover:none){ .paso .cap{ opacity:1; } }
 
   /* ---------- ideas: rejilla de producto ---------- */
   .ideas{ padding-block:8px 48px; }
@@ -445,28 +447,20 @@
     </div>
     <div class="pgrid">
       <article class="paso">
-        <div class="art">
-          <img class="ph" src="muestras-paso-01.webp" alt="Manos eligiendo entre muestrarios de alfombras Rols sobre una mesa" loading="lazy">
-          <div class="cap"><span class="n">01</span><h3>Selecciona hasta 5 muestras preferidas</h3></div>
-        </div>
+        <div class="meta"><span class="n">01</span><h3>Selecciona hasta 5 muestras preferidas</h3></div>
+          <div class="art"><img class="ph" src="muestras-paso-01.webp" alt="Manos eligiendo entre muestrarios de alfombras Rols sobre una mesa" loading="lazy"></div>
       </article>
       <article class="paso">
-        <div class="art">
-          <img class="ph" src="muestras-paso-02.webp" alt="Mano sosteniendo una muestra de alfombra para sentir su tacto" loading="lazy">
-          <div class="cap"><span class="n">02</span><h3>Siente el tacto y elige la que más te guste</h3></div>
-        </div>
+        <div class="meta"><span class="n">02</span><h3>Siente el tacto y elige la que más te guste</h3></div>
+          <div class="art"><img class="ph" src="muestras-paso-02.webp" alt="Mano sosteniendo una muestra de alfombra para sentir su tacto" loading="lazy"></div>
       </article>
       <article class="paso">
-        <div class="art">
-          <img class="ph" src="muestras-paso-03.webp" alt="Asesoramiento con muestras de alfombra en un showroom de Rols" loading="lazy">
-          <div class="cap"><span class="n">03</span><h3>¿Dudas? Te asesoramos para encontrar la opción perfecta</h3></div>
-        </div>
+        <div class="meta"><span class="n">03</span><h3>¿Dudas? Te asesoramos para encontrar la opción perfecta</h3></div>
+          <div class="art"><img class="ph" src="muestras-paso-03.webp" alt="Asesoramiento con muestras de alfombra en un showroom de Rols" loading="lazy"></div>
       </article>
       <article class="paso">
-        <div class="art">
-          <img class="ph" src="muestras-paso-04.webp" alt="Haciendo el pedido en el portátil con las muestras de alfombra sobre la mesa" loading="lazy">
-          <div class="cap"><span class="n">04</span><h3>Mide y haz tu pedido aplicando el descuento</h3></div>
-        </div>
+        <div class="meta"><span class="n">04</span><h3>Mide y haz tu pedido aplicando el descuento</h3></div>
+          <div class="art"><img class="ph" src="muestras-paso-04.webp" alt="Haciendo el pedido en el portátil con las muestras de alfombra sobre la mesa" loading="lazy"></div>
       </article>
     </div>
   </section>
