@@ -106,8 +106,6 @@
   main{ padding-top:var(--cabecera); }
 
   /* ---------- hero (dos columnas: texto + mosaico de muestras) ---------- */
-  /* banda de fondo claro: desde el eyebrow del hero (heroText::before) hasta el fin de los pasos */
-  .pasos{ background:var(--surface); }
   /* ---------- hero: collage de muestras grande y a sangre, sin caja ni sombra ---------- */
   .hero{ padding:0; position:relative; z-index:2; }
   .heroGrid{ display:grid; }
@@ -118,10 +116,6 @@
   .heroText h1{ max-width:16ch; }
   .heroText .lead{ font-size:13.5px; font-weight:300; line-height:1.8; color:var(--muted); max-width:46ch; }
   .heroText .arrow{ margin-top:6px; }
-  /* la banda crema empieza justo en el eyebrow (borde superior de .heroText) y va a sangre */
-  .heroText::before{ content:""; position:absolute; z-index:-1; left:0; width:100vw; top:20px; bottom:0; background:var(--surface); border-top:1px solid var(--line-strong); }
-  @media (min-width:768px){ .heroText::before{ top:24px; } }
-  @media (min-width:900px){ .heroText::before{ left:-64px; top:-90px; } }
   @media (min-width:900px){
     /* la foto llena la mitad derecha, llega arriba y a la derecha, y las muestras se salen por los bordes */
     .heroGrid{ grid-template-columns:minmax(0,0.8fr) minmax(0,1.3fr); align-items:center; gap:clamp(12px,1.5vw,28px); min-height:calc(100svh - var(--cabecera) - 16px); max-height:900px; padding:0 0 0 64px; }
