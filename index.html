@@ -106,6 +106,8 @@
   main{ padding-top:var(--cabecera); }
 
   /* ---------- hero (dos columnas: texto + mosaico de muestras) ---------- */
+  /* banda de fondo claro: del hero al final de los pasos */
+  .softzone{ background:var(--surface); }
   /* ---------- hero: collage de muestras grande y a sangre, sin caja ni sombra ---------- */
   .hero{ padding:0; position:relative; z-index:2; }
   .heroGrid{ display:grid; }
@@ -119,7 +121,7 @@
   @media (min-width:900px){
     /* la foto llena la mitad derecha, llega arriba y a la derecha, y las muestras se salen por los bordes */
     .heroGrid{ grid-template-columns:minmax(0,0.8fr) minmax(0,1.3fr); align-items:center; gap:clamp(12px,1.5vw,28px); min-height:calc(100svh - var(--cabecera) - 16px); max-height:900px; padding:0 0 0 64px; }
-    .heroText{ order:1; justify-content:center; gap:22px; padding:0 0 20px 0; }
+    .heroText{ order:1; justify-content:flex-end; gap:22px; padding:0 0 clamp(44px,8vh,88px) 0; }
     .heroArt{ order:2; height:100%; align-items:center; justify-content:flex-end; padding:0; overflow:visible; }
     .heroArt img{ width:100%; height:auto; max-width:none; margin-right:-14px; }
   }
@@ -446,6 +448,7 @@
 
 <main id="contenido">
 
+  <div class="softzone">
   <!-- HERO: dos columnas, texto + mosaico de muestras -->
   <section class="hero" aria-label="Muestras de alfombras en tu hogar">
     <div class="heroGrid">
@@ -456,7 +459,7 @@
         <a class="arrow" href="https://www.rolscarpets.com/productos/alfombras-a-medida/">Elige tus muestras <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg></a>
       </div>
       <div class="heroArt">
-        <img src="rols-muestras-hero-collage.webp" alt="Muestrarios de alfombras Rols en distintas texturas y tonos naturales dispuestos sobre un fondo claro" fetchpriority="high">
+        <img src="rols-muestras-hero-cream.webp" alt="Muestrarios de alfombras Rols en distintas texturas y tonos naturales dispuestos sobre un fondo claro" fetchpriority="high">
       </div>
     </div>
   </section>
@@ -515,6 +518,8 @@
       </article>
     </div>
   </section>
+
+  </div><!-- /softzone -->
 
   <!-- Biblioteca: añadir muestras -->
   <section class="wrap biblio" id="biblioteca" aria-label="Añade tus muestras">
